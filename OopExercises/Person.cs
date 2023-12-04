@@ -8,11 +8,38 @@ namespace OopExercises
 {
     internal class Person
     {
-        public string LastName { get; set; }
+        public Person(
+            string lastName,
+            string firstName,
+            DateTime dateOfBirth,
+            Address address) 
+        {
+            if (string.IsNullOrWhiteSpace(lastName))
+            {
+                throw new ArgumentNullException(nameof(lastName));
+            }
 
-        public string FirstName { get; set; }
+            if (string.IsNullOrWhiteSpace(firstName))
+            {
+                throw new ArgumentNullException(nameof(firstName));
+            }
 
-        public DateTime DateOfBirth { get; set; }
+            if (address is null)
+            {
+                throw new ArgumentNullException(nameof(address));
+            }
+
+            LastName = lastName;
+            FirstName = firstName;
+            DateOfBirth = dateOfBirth;
+            Address = address;
+
+        }
+        public string LastName { get; private set; }
+
+        public string FirstName { get; private set; }
+
+        public DateTime DateOfBirth { get; }
 
         public int Age 
         { 
@@ -20,6 +47,14 @@ namespace OopExercises
             {
                 return DateTime.Now.Year - DateOfBirth.Year;
             } 
+        }
+
+        public Address Address { get; private set; }
+
+        public void Print()
+        {
+            Console.WriteLine($"{LastName} {FirstName}, date of birth: {DateOfBirth:yyy-MM-dd}, age: {Age}");
+            Console.WriteLine($"Address: {Address.StreetName} {Address.StreetNumber} {Address.City} {Address.Country} {Address.County}");
         }
     }
 }
